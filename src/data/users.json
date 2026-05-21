@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "Mario Rossi", "email": "mario.rossi@example.com", "role": "Developer" },
+  { "id": 2, "name": "Anna Bianchi", "email": "anna.bianchi@example.com", "role": "UI/UX Designer" },
+  { "id": 3, "name": "Luca Verdi", "email": "luca.verdi@example.com", "role": "Product Manager" },
+  { "id": 4, "name": "Giulia Neri", "email": "giulia.neri@example.com", "role": "QA Engineer" },
+  { "id": 5, "name": "Francesco Russo", "email": "francesco.russo@example.com", "role": "DevOps Specialist" }
+]
