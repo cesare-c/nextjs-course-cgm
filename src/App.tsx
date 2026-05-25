@@ -4,6 +4,8 @@ import TaskList from './components/TaskList'
 import TaskListAsync from './components/TaskListAsync'
 import RegistrationForm from './components/RegistrationForm'
 import UserList from './components/UserList'
+import UserCrudContainer from './components/UserCrud/UserCrudContainer'
+import TaskApiDocumentation from './components/TaskApiDocumentation'
 import './App.css'
 
 function App() {
@@ -12,6 +14,20 @@ function App() {
   return (
     <>
       <section id="center">
+        {/* ----------------------------------ESERCIZIO GIORNO 27 */}
+        <div className="exercise-container" style={{ backgroundColor: '#fcf8ff', paddingBottom: '40px', paddingTop: '10px', borderBottom: '2px solid var(--border)' }}>
+          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 27 ---------- 25.Maggio.2026</h2>
+          <hr />
+          <UserCrudContainer />
+        </div>
+
+        {/* ----------------------------------ESERCIZIO GIORNO 26 */}
+        <div className="exercise-container" style={{ backgroundColor: '#fdf8f2', paddingBottom: '40px', paddingTop: '10px', borderBottom: '2px solid var(--border)' }}>
+          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 26 ---------- 22.Maggio.2026</h2>
+          <hr />
+          <TaskApiDocumentation />
+        </div>
+
         {/* ----------------------------------ESERCIZIO GIORNO 25 */}
         <div className="exercise-container" style={{ backgroundColor: '#eefcf5', paddingBottom: '40px', paddingTop: '10px' }}>
           <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 25 ---------- 21.Maggio.2026</h2>

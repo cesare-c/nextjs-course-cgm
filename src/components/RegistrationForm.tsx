@@ -229,6 +229,7 @@ function useForm<T extends Record<string, string>>(
 // ==========================================
 
 interface RegistrationValues {
+  [key: string]: string;
   email: string;
   password: string;
   confirmPassword: string;
