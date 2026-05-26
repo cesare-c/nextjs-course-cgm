@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -10,6 +14,18 @@
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --navbar-bg: linear-gradient(135deg, rgba(247, 244, 252, 0.95) 0%, rgba(238, 243, 252, 0.95) 100%);
+
+  --es-28-bg: #f5f8ff;
+  --es-27-bg: #fcf8ff;
+  --es-26-bg: #fdf8f2;
+  --es-25-bg: #eefcf5;
+  --es-24-bg: #fdf5e6;
+  --es-23-bg: #e6e6fa;
+  --es-22-bg: #e0f7fa;
+  --es-21-bg: #fff0f5;
+  --es-20-bg: #f0fff0;
+  --title-color: var(--text-h);
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -30,8 +46,45 @@
   }
 }
 
+/* Explicit class-based dark mode or system default */
+html.dark {
+  --text: #9ca3af;
+  --text-h: #f3f4f6;
+  --bg: #16171d;
+  --border: #2e303a;
+  --code-bg: #1f2028;
+  --accent: #c084fc;
+  --accent-bg: rgba(192, 132, 252, 0.15);
+  --accent-border: rgba(192, 132, 252, 0.5);
+  --social-bg: rgba(47, 48, 58, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  --navbar-bg: linear-gradient(135deg, rgba(31, 26, 48, 0.95) 0%, rgba(18, 16, 27, 0.95) 100%);
+
+  --es-28-bg: #131722;
+  --es-27-bg: #1e1b29;
+  --es-26-bg: #221d17;
+  --es-25-bg: #13241b;
+  --es-24-bg: #241d13;
+  --es-23-bg: #1a1a2b;
+  --es-22-bg: #122226;
+  --es-21-bg: #221217;
+  --es-20-bg: #0d1f11;
+  --title-color: #ffffff;
+}
+
+/* Smooth transition for theme toggle */
+body, #root, div.exercise-container, input, select, button, textarea {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.exercise-container {
+  scroll-margin-top: 80px; /* Offset for sticky navbar */
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  /* Only apply system media default if dark mode wasn't explicitly disabled by class light */
+  html:not(.light) {
     --text: #9ca3af;
     --text-h: #f3f4f6;
     --bg: #16171d;

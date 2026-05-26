@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import type { Task, FilterType } from '../types/task';
+import type { Task, FilterType } from '../../types/task';
 import TaskRow from './TaskRow';
 
 const ITEMS_PER_PAGE_OPTIONS = [5, 10, 20];

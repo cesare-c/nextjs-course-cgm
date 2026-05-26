@@ -1,65 +1,68 @@
-import { useState } from 'react'
-import ProfileCard from './components/ProfileCard'
-import TaskList from './components/TaskList'
-import TaskListAsync from './components/TaskListAsync'
-import RegistrationForm from './components/RegistrationForm'
-import UserList from './components/UserList'
-import UserCrudContainer from './components/UserCrud/UserCrudContainer'
-import TaskApiDocumentation from './components/TaskApiDocumentation'
+import ProfileCard from './exercises/Es21_Profiles/ProfileCard'
+import TaskList from './exercises/Es22_Tasks/TaskList'
+import TaskListAsync from './exercises/Es23_TasksAsync/TaskListAsync'
+import RegistrationForm from './exercises/Es24_Registration/RegistrationForm'
+import UserList from './exercises/Es25_UserList/UserList'
+import UserCrudContainer from './exercises/Es27_UserCrud/UserCrudContainer'
+import UserCrudContainerDay28 from './exercises/Es28_UserCrud/UserCrudContainer'
+import TaskApiDocumentation from './exercises/Es26_ApiDocs/TaskApiDocumentation'
+import DefaultExercise from './exercises/Es20_Default/DefaultExercise'
+import Navbar from './components/Navbar'
+import ExerciseNavbar from './components/ExerciseNavbar'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
+      <Navbar />
       <section id="center">
+        {/* ----------------------------------ESERCIZIO GIORNO 28 */}
+        <div className="exercise-container" id="es-28" style={{ backgroundColor: 'var(--es-28-bg)', paddingBottom: '40px', paddingTop: '10px', borderBottom: '2px solid var(--border)' }}>
+          <ExerciseNavbar title="Esercizio 28" date="26.Maggio.2026" exerciseId="Es28_UserCrud" />
+          <UserCrudContainerDay28 />
+        </div>
+
         {/* ----------------------------------ESERCIZIO GIORNO 27 */}
-        <div className="exercise-container" style={{ backgroundColor: '#fcf8ff', paddingBottom: '40px', paddingTop: '10px', borderBottom: '2px solid var(--border)' }}>
-          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 27 ---------- 25.Maggio.2026</h2>
-          <hr />
+        <div className="exercise-container" id="es-27" style={{ backgroundColor: 'var(--es-27-bg)', paddingBottom: '40px', paddingTop: '10px', borderBottom: '2px solid var(--border)' }}>
+          <ExerciseNavbar title="Esercizio 27" date="25.Maggio.2026" />
           <UserCrudContainer />
         </div>
 
         {/* ----------------------------------ESERCIZIO GIORNO 26 */}
-        <div className="exercise-container" style={{ backgroundColor: '#fdf8f2', paddingBottom: '40px', paddingTop: '10px', borderBottom: '2px solid var(--border)' }}>
-          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 26 ---------- 22.Maggio.2026</h2>
-          <hr />
+        <div className="exercise-container" id="es-26" style={{ backgroundColor: 'var(--es-26-bg)', paddingBottom: '40px', paddingTop: '10px', borderBottom: '2px solid var(--border)' }}>
+          <ExerciseNavbar title="Esercizio 26" date="22.Maggio.2026" />
           <TaskApiDocumentation />
         </div>
 
         {/* ----------------------------------ESERCIZIO GIORNO 25 */}
-        <div className="exercise-container" style={{ backgroundColor: '#eefcf5', paddingBottom: '40px', paddingTop: '10px' }}>
-          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 25 ---------- 21.Maggio.2026</h2>
-          <hr />
+        <div className="exercise-container" id="es-25" style={{ backgroundColor: 'var(--es-25-bg)', paddingBottom: '40px', paddingTop: '10px' }}>
+          <ExerciseNavbar title="Esercizio 25" date="21.Maggio.2026" />
           <UserList />
         </div>
 
         {/* ----------------------------------ESERCIZIO GIORNO 24 */}
-        <div className="exercise-container" style={{ backgroundColor: '#fdf5e6', paddingBottom: '40px', paddingTop: '10px' }}>
-          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 24 ---------- 20.Marzo.2026</h2>
-          <hr />
+        <div className="exercise-container" id="es-24" style={{ backgroundColor: 'var(--es-24-bg)', paddingBottom: '40px', paddingTop: '10px' }}>
+          <ExerciseNavbar title="Esercizio 24" date="20.Marzo.2026" />
           <RegistrationForm />
         </div>
 
         {/* ----------------------------------ESERCIZIO GIORNO 23 */}
-        <div className="exercise-container" style={{ backgroundColor: '#e6e6fa', paddingBottom: '40px', paddingTop: '10px' }}>
-          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 23 ---------- 18.Marzo.2026</h2>
-          <hr />
+        <div className="exercise-container" id="es-23" style={{ backgroundColor: 'var(--es-23-bg)', paddingBottom: '40px', paddingTop: '10px' }}>
+          <ExerciseNavbar title="Esercizio 23" date="18.Marzo.2026" />
           <TaskListAsync />
         </div>
 
         {/* ----------------------------------ESERCIZIO GIORNO 22 */}
-        <div className="exercise-container" style={{ backgroundColor: '#e0f7fa', paddingBottom: '40px', paddingTop: '10px' }}>
-          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 22 ---------- 15.Marzo.2026</h2>
-          <hr />
+        <div className="exercise-container" id="es-22" style={{ backgroundColor: 'var(--es-22-bg)', paddingBottom: '40px', paddingTop: '10px' }}>
+          <ExerciseNavbar title="Esercizio 22" date="15.Marzo.2026" />
           <TaskList />
         </div>
 
         {/* -----------------------------ESERCIZIO GIORNO 21 */}
-        <div className="exercise-container" style={{ backgroundColor: '#fff0f5', borderTop: '2px solid #ccc', paddingBottom: '40px', paddingTop: '10px' }}>
-          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio 21 ---------- 14.Marzo.2026</h2>
-          {/* <hr /> */}
+        <div className="exercise-container" id="es-21" style={{ backgroundColor: 'var(--es-21-bg)', borderTop: '2px solid var(--border)', paddingBottom: '40px', paddingTop: '10px' }}>
+          <ExerciseNavbar title="Esercizio 21" date="14.Marzo.2026" />
           <div className="profile-container" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '40px' }}>
             <ProfileCard
               // -------- props passate
@@ -77,15 +80,10 @@ function App() {
           </div>
         </div>
 
-        {/* ---------------------------ESERCIZIO DEFAULT */}
-        <div className="exercise-container" style={{ backgroundColor: '#f0fff0', borderTop: '2px solid #ccc', paddingBottom: '40px', paddingTop: '10px' }}>
-          <h2 className="exercise-title" style={{ marginTop: 0 }}>Esercizio default</h2>
-          <hr />
-          <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: '1.2rem', margin: '10px 0' }}>Conteggio: {count}</p>
-            <button onClick={() => setCount((c) => c - 1)} style={{ marginRight: '10px', padding: '5px 15px' }}>-</button>
-            <button onClick={() => setCount((c) => c + 1)} style={{ padding: '5px 15px' }}>+</button>
-          </div>
+        {/* ---------------------------ESERCIZIO 20 */}
+        <div className="exercise-container" id="es-20" style={{ backgroundColor: 'var(--es-20-bg)', borderTop: '2px solid var(--border)', paddingBottom: '40px', paddingTop: '10px' }}>
+          <ExerciseNavbar title="Esercizio 20" date="13.Marzo.2026" exerciseId="Es20_Default" />
+          <DefaultExercise />
         </div>
 
         {/* RESTO TUTTO COMMENTATO */}

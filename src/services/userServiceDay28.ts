@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { User, UserInput } from '../types/userDay27';
+import type { User, UserInput } from '../types/userDay28';
 
 const API_URL = 'http://localhost:3001/users';
 const DELAY_MS = 800;
@@ -25,7 +25,7 @@ const mapUser = (user: any): User => ({
   id: isNaN(Number(user.id)) ? user.id : Number(user.id)
 });
 
-export const userServiceDay27 = {
+export const userServiceDay28 = {
   // 1. Read (List with Pagination & Filters)
   async fetchUsers(
     page: number,

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
+import MessageModal from '../../shared/MessageModal';
 
 // ==========================================
 // 1. GENERIC FORM SYSTEM (REUSABLE)
@@ -272,7 +273,7 @@ const registrationFields: FieldConfig<RegistrationValues>[] = [
         return errs;
       }
       if (value.length < 8) errs.push('La password deve contenere almeno 8 caratteri.');
-      if (!/(?=.*[a-z])/.test(value)) errs.push('La password deve contenere almeno una lettera minuscola.');
+      if (!/(?=.*[a-z])/.test(value)) errs.push('La password deve contenere almeno una letterua minuscola.');
       if (!/(?=.*[A-Z])/.test(value)) errs.push('La password deve contenere almeno una lettera maiuscola.');
       if (!/(?=.*\d)/.test(value)) errs.push('La password deve contenere almeno un numero.');
       if (!/(?=.*[!@#$%^&*()_+={}[\]|\\:;"'<>,.?/-])/.test(value)) errs.push('La password deve contenere almeno un simbolo speciale.');
@@ -317,6 +318,8 @@ const registrationFields: FieldConfig<RegistrationValues>[] = [
 // ==========================================
 
 const RegistrationForm = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const {
     values,
     touched,
@@ -326,7 +329,7 @@ const RegistrationForm = () => {
     handleSubmit,
     isFormValid,
   } = useForm(initialRegistrationValues, registrationFields, () => {
-    alert('Registrazione avvenuta con successo!');
+    setIsModalOpen(true);
   });
 
   return (
@@ -367,6 +370,14 @@ const RegistrationForm = () => {
         </button>
 
       </form>
+
+      <MessageModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Registrazione Completata"
+        message="Registrazione avvenuta con successo!"
+        type="success"
+      />
     </div>
   );
 };

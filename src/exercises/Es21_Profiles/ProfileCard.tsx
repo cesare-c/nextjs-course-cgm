@@ -1,6 +1,5 @@
 // Esempio di props + state + conditional rendering in React + TypeScript.
 
-
 import { useState } from 'react';
 import './ProfileCard.css';
 
@@ -48,7 +47,3 @@ const ProfileCard = ({
 };
 
 export default ProfileCard;
-
-
-
-

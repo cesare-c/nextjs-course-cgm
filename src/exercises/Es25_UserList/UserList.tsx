@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { userService } from '../services/userService';
-import type { User } from '../types/user';
+import { userService } from '../../services/userService';
+import type { User } from '../../types/user';
 
 type UIStatus = 'idle' | 'loading' | 'success' | 'empty' | 'error';
 type DataSource = 'none' | 'network' | 'cache';

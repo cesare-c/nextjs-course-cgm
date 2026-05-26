@@ -4,6 +4,7 @@ import { userServiceDay27 } from '../../services/userServiceDay27';
 import UserCrudList from './UserCrudList';
 import UserCrudDetail from './UserCrudDetail';
 import UserCrudForm from './UserCrudForm';
+import MessageModal from '../../shared/MessageModal';
 
 type ViewMode = 'list' | 'detail' | 'create' | 'edit';
 type UIState = 'idle' | 'loading' | 'success' | 'empty' | 'error';
@@ -13,7 +14,7 @@ const LIMIT = 5; // 5 users per page
 export default function UserCrudContainer() {
   // Navigation State
   const [view, setView] = useState<ViewMode>('list');
-  const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+  const [selectedUserId, setSelectedUserId] = useState<number | string | null>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   // List State
@@ -29,6 +30,44 @@ export default function UserCrudContainer() {
 
   // Simulator Toggles for developer/testing
   const [simulateError, setSimulateError] = useState<boolean>(false);
+
+  // Message Modal State
+  const [modal, setModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    type: 'success' | 'error' | 'info';
+    showCancel?: boolean;
+    onConfirm?: () => void;
+    confirmLabel?: string;
+    cancelLabel?: string;
+  }>({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'info'
+  });
+
+  const showModal = (
+    title: string,
+    message: string,
+    type: 'success' | 'error' | 'info',
+    showCancel?: boolean,
+    onConfirm?: () => void,
+    confirmLabel?: string,
+    cancelLabel?: string
+  ) => {
+    setModal({
+      isOpen: true,
+      title,
+      message,
+      type,
+      showCancel,
+      onConfirm,
+      confirmLabel,
+      cancelLabel
+    });
+  };
 
   // Fetch paginated, filtered users
   const loadUsers = useCallback(async () => {
@@ -58,7 +97,7 @@ export default function UserCrudContainer() {
   }, [view, loadUsers]);
 
   // Fetch detailed user
-  const fetchSingleUser = async (id: number) => {
+  const fetchSingleUser = async (id: number | string) => {
     setUiState('loading');
     setErrorMessage(null);
     try {
@@ -81,9 +120,9 @@ export default function UserCrudContainer() {
       await userServiceDay27.createUser(input, simulateError);
       setView('list');
       setCurrentPage(1); // Go to first page to see new user or filter appropriately
-      alert('Utente creato con successo!');
+      showModal('Operazione Completata', 'Utente creato con successo!', 'success');
     } catch (err: any) {
-      alert(`Errore: ${err.message}`);
+      showModal('Errore', `Impossibile creare l'utente: ${err.message}`, 'error');
     } finally {
       setIsSaving(false);
     }
@@ -98,16 +137,16 @@ export default function UserCrudContainer() {
       const updatedUser = await userServiceDay27.updateUser(selectedUserId, input, simulateError);
       setSelectedUser(updatedUser);
       setView('detail');
-      alert('Utente aggiornato con successo!');
+      showModal('Operazione Completata', 'Utente aggiornato con successo!', 'success');
     } catch (err: any) {
-      alert(`Errore: ${err.message}`);
+      showModal('Errore', `Impossibile aggiornare l'utente: ${err.message}`, 'error');
     } finally {
       setIsSaving(false);
     }
   };
 
   // Delete handler
-  const handleDeleteUser = async (id: number) => {
+  const handleDeleteUser = async (id: number | string) => {
     setIsSaving(true);
     setErrorMessage(null);
     try {
@@ -121,9 +160,9 @@ export default function UserCrudContainer() {
       } else {
         loadUsers();
       }
-      alert('Utente eliminato con successo!');
+      showModal('Operazione Completata', 'Utente eliminato con successo!', 'success');
     } catch (err: any) {
-      alert(`Errore: ${err.message}`);
+      showModal('Errore', `Impossibile eliminare l'utente: ${err.message}`, 'error');
     } finally {
       setIsSaving(false);
       setSelectedUser(null);
@@ -133,14 +172,22 @@ export default function UserCrudContainer() {
 
   // Reset Database
   const handleResetDb = async () => {
-    if (confirm('Sei sicuro di voler ripristinare il database allo stato iniziale?')) {
-      setUiState('loading');
-      await userServiceDay27.resetDatabase();
-      setCurrentPage(1);
-      setFilter('all');
-      setView('list');
-      loadUsers();
-    }
+    showModal(
+      'Ripristina Database',
+      'Sei sicuro di voler ripristinare il database allo stato iniziale?',
+      'info',
+      true,
+      async () => {
+        setUiState('loading');
+        await userServiceDay27.resetDatabase();
+        setCurrentPage(1);
+        setFilter('all');
+        setView('list');
+        loadUsers();
+      },
+      'Ripristina',
+      'Annulla'
+    );
   };
 
   // Reset error page trigger
@@ -248,20 +295,6 @@ export default function UserCrudContainer() {
             >
               Rimuovi Filtri
             </button>
-            <button 
-              onClick={() => setView('create')} 
-              style={{
-                padding: '8px 16px',
-                backgroundColor: 'transparent',
-                color: 'var(--text)',
-                border: '1px solid var(--border)',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontSize: '0.85rem'
-              }}
-            >
-              Crea Utente
-            </button>
           </div>
         </div>
       );
@@ -342,21 +375,19 @@ export default function UserCrudContainer() {
                 onFilterChange={(f) => { setFilter(f); setCurrentPage(1); }}
                 onPageChange={setCurrentPage}
                 onSelectUser={fetchSingleUser}
-                onAddUser={() => setView('create')}
-                onEditUser={async (id) => {
-                  setUiState('loading');
-                  try {
-                    const u = await userServiceDay27.fetchUserById(id, simulateError);
-                    setSelectedUser(u);
-                    setSelectedUserId(id);
-                    setView('edit');
-                    setUiState('success');
-                  } catch (err: any) {
-                    setErrorMessage(err.message || 'Impossibile caricare l\'utente per la modifica.');
-                    setUiState('error');
-                  }
+                onDeleteUser={async (id) => {
+                  const userToDelete = users.find((u) => u.id === id);
+                  const username = userToDelete ? `@${userToDelete.username}` : 'questo utente';
+                  showModal(
+                    'Elimina Utente',
+                    `Sei sicuro di voler eliminare l'utente ${username}? L'azione è irreversibile.`,
+                    'error',
+                    true,
+                    () => handleDeleteUser(id),
+                    'Elimina',
+                    'Annulla'
+                  );
                 }}
-                onDeleteUser={handleDeleteUser}
                 isActionInProgress={isSaving}
               />
             )}
@@ -365,29 +396,25 @@ export default function UserCrudContainer() {
               <UserCrudDetail
                 user={selectedUser}
                 onBack={() => { setView('list'); setSelectedUser(null); setSelectedUserId(null); }}
-                onEdit={() => setView('edit')}
                 onDelete={() => handleDeleteUser(selectedUser.id)}
                 isDeleting={isSaving}
-              />
-            )}
-
-            {(view === 'create' || view === 'edit') && (
-              <UserCrudForm
-                initialUser={view === 'edit' && selectedUser ? selectedUser : undefined}
-                onSubmit={view === 'edit' ? handleEditUserSubmit : handleCreateUserSubmit}
-                onCancel={() => {
-                  if (view === 'edit') {
-                    setView('detail');
-                  } else {
-                    setView('list');
-                  }
-                }}
-                isSaving={isSaving}
               />
             )}
           </>
         )}
       </div>
+
+      <MessageModal
+        isOpen={modal.isOpen}
+        onClose={() => setModal((prev) => ({ ...prev, isOpen: false }))}
+        title={modal.title}
+        message={modal.message}
+        type={modal.type}
+        showCancel={modal.showCancel}
+        onConfirm={modal.onConfirm}
+        confirmLabel={modal.confirmLabel}
+        cancelLabel={modal.cancelLabel}
+      />
 
       {/* CSS Animation Injection */}
       <style>{`

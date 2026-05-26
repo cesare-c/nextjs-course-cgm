@@ -26,6 +26,8 @@
 
 .exercise-title {
   margin: 10px 0 20px 0;
+  color: var(--title-color);
+  transition: color 0.25s ease;
 }
 
 .simple-card {
@@ -202,4 +204,88 @@
     right: 0;
     border-right-color: var(--border);
   }
+}
+
+/* Exercise Mini Navbar (Toolbar) styling */
+.exercise-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 18px;
+  background-color: var(--social-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.exercise-navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.exercise-navbar-title {
+  font-family: var(--heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.exercise-navbar-divider {
+  color: var(--text);
+  opacity: 0.5;
+  font-weight: 300;
+}
+
+.exercise-navbar-date {
+  font-size: 0.88rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.exercise-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  height: 34px;
+  box-sizing: border-box;
+}
+
+.btn-action:hover {
+  transform: translateY(-1.5px);
+  box-shadow: var(--shadow);
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-action.btn-secondary {
+  border-color: var(--border);
+  background: transparent;
+  color: var(--text);
+}
+
+.btn-action.btn-secondary:hover {
+  border-color: var(--text-h);
+  color: var(--text-h);
+  background: var(--social-bg);
 }

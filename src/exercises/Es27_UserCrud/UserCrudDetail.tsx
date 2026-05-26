@@ -5,12 +5,11 @@ import { formatFullName } from '../../helpers/userHelpers';
 interface UserCrudDetailProps {
   user: User;
   onBack: () => void;
-  onEdit: () => void;
   onDelete: () => Promise<void>;
   isDeleting: boolean;
 }
 
-export default function UserCrudDetail({ user, onBack, onEdit, onDelete, isDeleting }: UserCrudDetailProps) {
+export default function UserCrudDetail({ user, onBack, onDelete, isDeleting }: UserCrudDetailProps) {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const cardStyle = {
@@ -165,9 +164,6 @@ export default function UserCrudDetail({ user, onBack, onEdit, onDelete, isDelet
             &larr; Torna alla Lista
           </button>
           <div style={{ display: 'flex', gap: '8px' }}>
-            <button onClick={onEdit} style={primaryButtonStyle} disabled={isDeleting}>
-              Modifica
-            </button>
             <button onClick={() => setShowConfirmDelete(true)} style={dangerButtonStyle} disabled={isDeleting}>
               Elimina
             </button>

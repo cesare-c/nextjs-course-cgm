@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizzatore Documentazione</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Marked.js (Markdown Parser) -->
+  <script src="/vendor/marked.min.js"></script>
+  
+  <!-- Prism.js (Syntax Highlighting) -->
+  <link rel="stylesheet" href="/vendor/prism-solarized-dark-atom.min.css" id="prism-theme">
+  <script src="/vendor/prism.min.js"></script>
+  <script src="/vendor/prism-tsx.min.js"></script>
+
+  <style>
+    :root {
+      --text: #6b6375;
+      --text-h: #08060d;
+      --bg: #faf9f6;
+      --card-bg: #ffffff;
+      --border: #e5e4e7;
+      --code-bg: #f4f3ec;
+      --accent: #aa3bff;
+      --accent-bg: rgba(170, 59, 255, 0.08);
+      --shadow: rgba(0, 0, 0, 0.05) 0px 10px 30px -5px, rgba(0, 0, 0, 0.02) 0px 4px 12px -2px;
+      --sans: 'Inter', system-ui, sans-serif;
+      --heading: 'Outfit', system-ui, sans-serif;
+      --mono: 'Fira Code', monospace;
+    }
+
+    html.dark {
+      --text: #9ca3af;
+      --text-h: #f3f4f6;
+      --bg: #0f1015;
+      --card-bg: #16171d;
+      --border: #232530;
+      --code-bg: #1e1f29;
+      --accent: #c084fc;
+      --accent-bg: rgba(192, 132, 252, 0.12);
+      --shadow: rgba(0, 0, 0, 0.3) 0px 10px 35px -5px, rgba(0, 0, 0, 0.2) 0px 4px 15px -3px;
+    }
+
+    body {
+      margin: 0;
+      padding: 60px 0 0 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      line-height: 1.65;
+      display: block;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .back-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      box-sizing: border-box;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background-color: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-back:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background-color: var(--accent-bg);
+      transform: translateY(-1px);
+    }
+
+    .btn-close-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background-color: #ff4d4f;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(255, 77, 79, 0.2);
+    }
+
+    .btn-close-tab:hover {
+      background-color: #d9363e;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(255, 77, 79, 0.3);
+    }
+
+    .btn-theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text);
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .btn-theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--text-h);
+      background-color: var(--accent-bg);
+    }
+
+    .doc-card {
+      background-color: var(--card-bg);
+      border: none;
+      border-radius: 0;
+      padding: 40px 60px;
+      box-shadow: none;
+      box-sizing: border-box;
+      min-height: calc(100vh - 60px);
+      transition: background-color 0.3s;
+    }
+    
+    .content {
+      max-width: 950px;
+      margin: 0;
+    }
+
+    /* Markdown styling classes */
+    .content h1, .content h2, .content h3, .content h4 {
+      font-family: var(--heading);
+      color: var(--text-h);
+      margin-top: 1.8em;
+      margin-bottom: 0.5em;
+      font-weight: 600;
+    }
+
+    .content h1 {
+      font-size: 2.2rem;
+      line-height: 1.25;
+      margin-top: 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .content h2 {
+      font-size: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .content p {
+      margin-top: 0;
+      margin-bottom: 1.2em;
+    }
+
+    .content code {
+      font-family: var(--mono);
+      background-color: var(--code-bg);
+      color: var(--accent);
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      transition: background-color 0.3s;
+    }
+
+    .content pre {
+      position: relative;
+      margin: 1.5em 0;
+      border-radius: 8px;
+      overflow: auto;
+      border: 1px solid var(--border);
+      background-color: #002b36 !important;
+    }
+
+    .content pre code {
+      display: block;
+      padding: 16px;
+      background: #002b36 !important;
+      color: #839496 !important;
+      overflow-x: auto;
+      font-size: 0.9rem;
+    }
+
+    .content ul, .content ol {
+      margin-top: 0;
+      margin-bottom: 1.5em;
+      padding-left: 24px;
+    }
+
+    .content li {
+      margin-bottom: 0.6em;
+    }
+
+    .content hr {
+      border: 0;
+      height: 1px;
+      background-color: var(--border);
+      margin: 2em 0;
+    }
+
+    .content blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 8px 0 8px 16px;
+      margin: 1.5em 0;
+      background-color: var(--accent-bg);
+      border-radius: 0 8px 8px 0;
+      color: var(--text-h);
+      font-style: italic;
+    }
+
+    /* Table Styling */
+    .content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.8em 0;
+      font-size: 0.95rem;
+      text-align: left;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .content th {
+      background-color: var(--code-bg);
+      color: var(--text-h);
+      font-weight: 600;
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .content td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      transition: background-color 0.2s ease;
+    }
+
+    .content tr:last-child td {
+      border-bottom: none;
+    }
+
+    .content tr:nth-child(even) {
+      background-color: rgba(0, 0, 0, 0.015);
+    }
+    
+    html.dark .content tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    .content tr:hover td {
+      background-color: var(--accent-bg);
+    }
+
+    /* Main Layout Grid */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+
+    @media (min-width: 1250px) {
+      .main-layout {
+        grid-template-columns: 280px 1fr;
+      }
+    }
+
+    /* Sidebar Table of Contents */
+    .sidebar-toc {
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+      background-color: var(--card-bg);
+      border-right: 1px solid var(--border);
+      border-top: none;
+      border-left: none;
+      border-bottom: none;
+      border-radius: 0;
+      padding: 30px 24px;
+      box-shadow: none;
+      display: none;
+      box-sizing: border-box;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    @media (min-width: 1250px) {
+      .sidebar-toc {
+        display: block;
+      }
+    }
+
+    .toc-header {
+      font-family: var(--heading);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-h);
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .toc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc-item {
+      font-size: 0.85rem;
+      color: var(--text);
+      text-decoration: none;
+      line-height: 1.4;
+      border-left: 2px solid transparent;
+      padding-left: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .toc-item:hover {
+      color: var(--accent);
+      padding-left: 12px;
+    }
+
+    .toc-item.active {
+      color: var(--accent);
+      font-weight: 600;
+      border-left-color: var(--accent);
+    }
+    
+    .toc-item.toc-h2 {
+      padding-left: 10px;
+    }
+    .toc-item.toc-h3 {
+      padding-left: 20px;
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+    .toc-item.toc-h3:hover {
+      padding-left: 22px;
+    }
+    .toc-item.toc-h3.active {
+      border-left-color: var(--accent);
+    }
+
+    /* Alert Box Styling */
+    .alert-box {
+      border-left: 4px solid transparent;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 1.8em 0;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .alert-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--heading);
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+    
+    .alert-box p {
+      margin: 0 !important;
+    }
+    
+    .alert-note {
+      background-color: rgba(52, 152, 219, 0.06);
+      border-left-color: #3498db;
+      color: var(--text);
+    }
+    .alert-note .alert-title {
+      color: #2980b9;
+    }
+    
+    .alert-tip {
+      background-color: rgba(46, 204, 113, 0.06);
+      border-left-color: #2ecc71;
+      color: var(--text);
+    }
+    .alert-tip .alert-title {
+      color: #27ae60;
+    }
+    
+    .alert-warning {
+      background-color: rgba(230, 126, 34, 0.06);
+      border-left-color: #e67e22;
+      color: var(--text);
+    }
+    .alert-warning .alert-title {
+      color: #d35400;
+    }
+
+    .alert-important {
+      background-color: rgba(231, 76, 60, 0.06);
+      border-left-color: #e74c3c;
+      color: var(--text);
+    }
+    .alert-important .alert-title {
+      color: #c0392b;
+    }
+
+    html.dark .alert-note { background-color: rgba(52, 152, 219, 0.12); }
+    html.dark .alert-tip { background-color: rgba(46, 204, 113, 0.12); }
+    html.dark .alert-warning { background-color: rgba(230, 126, 34, 0.12); }
+    html.dark .alert-important { background-color: rgba(231, 76, 60, 0.12); }
+
+    .error-container {
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .error-title {
+      font-family: var(--heading);
+      color: #ff4d4f;
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    /* Reading Progress Bar */
+    .progress-container {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: transparent;
+      z-index: 1000;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent) 0%, #3498db 100%);
+      transition: width 0.1s ease-out;
+    }
+
+    /* Navbar Document Title */
+    .nav-doc-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-h);
+      letter-spacing: -0.2px;
+      pointer-events: none;
+      white-space: nowrap;
+      opacity: 0.85;
+      transition: color 0.3s;
+    }
+
+    /* Clipboard Copy Button */
+    .btn-copy-code {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      color: #839496;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--sans);
+    }
+    
+    .content pre:hover .btn-copy-code {
+      opacity: 1;
+    }
+    
+    .btn-copy-code:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #eee8d5;
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 80px 10px 30px 10px;
+      }
+      .doc-card {
+        padding: 20px 15px;
+      }
+      .content h1 {
+        font-size: 1.8rem;
+      }
+      .nav-doc-title {
+        display: none;
+      }
+    }
+
+    .btn-scroll-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1001;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeInUp 0.25s ease-out forwards;
+      outline: none;
+    }
+
+    .btn-scroll-top:hover {
+      transform: translateY(-4px);
+      background-color: var(--accent-bg);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="back-nav">
+      <!-- Left side: dynamic link to the other document -->
+      <a id="nav-toggle-doc" href="#" class="btn-back" style="display: none;">
+        <!-- Filled dynamically by JavaScript -->
+      </a>
+      
+      <!-- Center side: current document title -->
+      <div id="nav-doc-title" class="nav-doc-title">
+        <!-- Filled dynamically by JavaScript -->
+      </div>
+      
+      <!-- Right side: action buttons (theme toggle and close) -->
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <!-- Toggle theme button -->
+        <button id="btn-theme-toggle" class="btn-theme-toggle" aria-label="Cambia tema">
+          <!-- Icon will be set by JavaScript -->
+        </button>
+
+        <!-- Close tab button -->
+        <button onclick="window.close()" class="btn-close-tab">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          Chiudi Documento
+        </button>
+      </div>
+    </div>
+
+    <!-- Reading Progress Bar -->
+    <div class="progress-container">
+      <div id="reading-progress-bar" class="progress-bar"></div>
+    </div>
+
+    <div class="main-layout">
+      <div class="sidebar-toc" id="sidebar-toc">
+        <div class="toc-header">Indice</div>
+        <div id="toc-list" class="toc-list"></div>
+      </div>
+
+      <div class="doc-card">
+        <div id="content" class="content">
+          <div style="text-align: center; padding: 40px 0; color: var(--text);">
+            <svg style="animation: spin 1s linear infinite; margin-bottom: 12px;" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="2" x2="12" y2="6"></line>
+              <line x1="12" y1="18" x2="12" y2="22"></line>
+              <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+              <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+              <line x1="2" y1="12" x2="6" y2="12"></line>
+              <line x1="18" y1="12" x2="22" y2="12"></line>
+              <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+              <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+            </svg>
+            <p>Caricamento del documento in corso...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script>
+    // Theme setup based on localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else if (savedTheme === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (systemDark) {
+        document.documentElement.classList.add('dark');
+      }
+    }
+
+    // GitHub and emoji Alert parser
+    function parseAlerts(container) {
+      container.querySelectorAll('blockquote').forEach(bq => {
+        const text = bq.innerText.trim();
+        let alertClass = '';
+        let title = '';
+        let svgIcon = '';
+        
+        if (text.includes('💡') || text.toLowerCase().includes('best practice') || text.toLowerCase().includes('regola d\'oro') || text.toLowerCase().includes('regola d’oro')) {
+          alertClass = 'alert-tip';
+          title = 'SUGGERIMENTO';
+          svgIcon = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="margin-right: 6px;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2 2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>`;
+        } else if (text.includes('⚠️') || text.toLowerCase().includes('warning') || text.toLowerCase().includes('attenzione') || text.toLowerCase().includes('important')) {
+          alertClass = 'alert-warning';
+          title = 'ATTENZIONE';
+          svgIcon = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="margin-right: 6px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
+        } else if (text.includes('ℹ️') || text.includes('[!NOTE]') || text.toLowerCase().includes('nota')) {
+          alertClass = 'alert-note';
+          title = 'NOTA';
+          svgIcon = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="margin-right: 6px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>`;
+        }
+        
+        if (alertClass) {
+          const cleanContent = bq.innerHTML
+            .replace(/💡\s*Best Practice/gi, '')
+            .replace(/💡\s*Regola d’Oro/gi, '')
+            .replace(/💡\s*Regola d'Oro/gi, '')
+            .replace(/💡/g, '')
+            .replace(/⚠️\s*Warning/gi, '')
+            .replace(/⚠️\s*Attenzione/gi, '')
+            .replace(/⚠️/g, '')
+            .replace(/\[!NOTE\]/gi, '')
+            .replace(/\[!TIP\]/gi, '')
+            .replace(/\[!WARNING\]/gi, '')
+            .replace(/\[!IMPORTANT\]/gi, '');
+            
+          const alertBox = document.createElement('div');
+          alertBox.className = `alert-box ${alertClass}`;
+          alertBox.innerHTML = `
+            <div class="alert-title">${svgIcon}${title}</div>
+            <div class="alert-content">${cleanContent}</div>
+          `;
+          bq.parentNode.replaceChild(alertBox, bq);
+        }
+      });
+    }
+
+    // Dynamic TOC generator
+    function generateTOC() {
+      const tocList = document.getElementById('toc-list');
+      const tocHeader = document.querySelector('.toc-header');
+      if (!tocList) return;
+
+      tocList.innerHTML = '';
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      const filePath = urlParams.get('file') || '';
+      const fileName = filePath.split('/').pop();
+      if (tocHeader) {
+        tocHeader.textContent = fileName === 'lezione.md' ? 'Indice Lezione' : 'Indice Progetto';
+      }
+
+      const headers = document.querySelectorAll('.content h2, .content h3');
+      if (headers.length === 0) {
+        const sidebar = document.getElementById('sidebar-toc');
+        if (sidebar) sidebar.style.display = 'none';
+        return;
+      } else {
+        const sidebar = document.getElementById('sidebar-toc');
+        if (sidebar && window.innerWidth >= 1250) sidebar.style.display = 'block';
+      }
+
+      headers.forEach((header, index) => {
+        if (!header.id) {
+          header.id = 'heading-' + index;
+        }
+
+        const link = document.createElement('a');
+        link.href = '#' + header.id;
+        link.className = `toc-item toc-${header.tagName.toLowerCase()}`;
+        link.textContent = header.textContent;
+        
+        tocList.appendChild(link);
+      });
+
+      setupScrollspy();
+    }
+
+    // Scrollspy Highlight logic
+    function setupScrollspy() {
+      const headers = Array.from(document.querySelectorAll('.content h2, .content h3'));
+      const tocItems = Array.from(document.querySelectorAll('.toc-item'));
+      if (headers.length === 0 || tocItems.length === 0) return;
+
+      function updateActiveTOC() {
+        let activeIndex = -1;
+        const scrollPosition = window.scrollY + 100; // offset for sticky navbar
+
+        for (let i = 0; i < headers.length; i++) {
+          if (scrollPosition >= headers[i].offsetTop) {
+            activeIndex = i;
+          } else {
+            break;
+          }
+        }
+
+        tocItems.forEach((item, index) => {
+          if (index === activeIndex) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+      }
+
+      window.removeEventListener('scroll', window.currentScrollspyHandler);
+      window.currentScrollspyHandler = updateActiveTOC;
+      window.addEventListener('scroll', window.currentScrollspyHandler);
+      updateActiveTOC();
+    }
+
+    // Setup Copy Buttons on Pre Blocks
+    function setupCopyButtons() {
+      document.querySelectorAll('.content pre').forEach(pre => {
+        // Prevent duplicates
+        if (pre.querySelector('.btn-copy-code')) return;
+
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'btn-copy-code';
+        copyBtn.innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Copia</span>
+        `;
+        
+        const codeEl = pre.querySelector('code');
+        const textToCopy = codeEl ? codeEl.innerText : pre.innerText;
+        
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            copyBtn.innerHTML = `
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>Copiato!</span>
+            `;
+            copyBtn.style.borderColor = '#2aa198';
+            copyBtn.style.color = '#2aa198';
+            
+            setTimeout(() => {
+              copyBtn.innerHTML = `
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span>Copia</span>
+              `;
+              copyBtn.style.borderColor = '';
+              copyBtn.style.color = '';
+            }, 2000);
+          }).catch(err => {
+            console.error('Failed to copy code block:', err);
+          });
+        });
+        
+        pre.appendChild(copyBtn);
+      });
+    }
+
+    // Load Markdown content
+    async function loadMarkdown() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const filePath = urlParams.get('file');
+
+      if (!filePath) {
+        showError("Parametro 'file' mancante nell'URL.");
+        return;
+      }
+
+      // Sanity check to prevent path traversal issues
+      if (!filePath.startsWith('/docs/')) {
+        showError("Percorso del file non autorizzato.");
+        return;
+      }
+
+      // Populate navigation navbar toggle buttons
+      setupToggleNavigation(filePath);
+
+      try {
+        const response = await fetch(filePath);
+        if (!response.ok) {
+          throw new Error(`File non trovato o errore del server (Stato: ${response.status})`);
+        }
+
+        const markdownText = await response.text();
+        
+        // Use marked.js to convert to html
+        const htmlContent = marked.parse(markdownText);
+        
+        const contentEl = document.getElementById('content');
+        contentEl.innerHTML = htmlContent;
+
+        // Parse emoji and markdown blockquotes into beautiful alert boxes
+        parseAlerts(contentEl);
+
+        // Generate Table of Contents sidebar
+        generateTOC();
+
+        // Set document title in center navbar
+        const parts = filePath.split('/');
+        const fileName = parts[parts.length - 1];
+        const docTitleEl = document.getElementById('nav-doc-title');
+        if (docTitleEl) {
+          docTitleEl.textContent = fileName === 'lezione.md' ? 'Lezione Teorica' : 'Spiegazione del Progetto';
+        }
+
+        // Apply syntax highlighting
+        Prism.highlightAll();
+
+        // Setup copy buttons for code blocks
+        setupCopyButtons();
+
+      } catch (error) {
+        console.error(error);
+        showError(`Impossibile caricare il documento: ${filePath}. Il file potrebbe non essere ancora presente in questa versione del progetto.`);
+      }
+    }
+
+    function setupToggleNavigation(filePath) {
+      const parts = filePath.split('/');
+      const fileName = parts[parts.length - 1]; // e.g. "lezione.md" or "progetto.md"
+      const folderPath = parts.slice(0, parts.length - 1).join('/'); // e.g. "/docs/Es20_Default"
+      
+      const toggleDocBtn = document.getElementById('nav-toggle-doc');
+      const targetFileName = fileName === 'lezione.md' ? 'progetto.md' : 'lezione.md';
+      const targetPath = `${folderPath}/${targetFileName}`;
+      
+      // Perform a check if the alternate file exists
+      fetch(targetPath, { method: 'HEAD' })
+        .then(res => {
+          if (res.ok) {
+            toggleDocBtn.href = `/viewer.html?file=${encodeURIComponent(targetPath)}`;
+            if (fileName === 'lezione.md') {
+              toggleDocBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+                <span>Spiega il Progetto</span>
+              `;
+            } else {
+              toggleDocBtn.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 6px;">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                <span>Vedi Lezione</span>
+              `;
+            }
+            toggleDocBtn.style.display = 'inline-flex';
+          }
+        })
+        .catch(err => {
+          console.log("Alternate document check failed:", err);
+        });
+    }
+
+    function showError(message) {
+      document.getElementById('content').innerHTML = `
+        <div class="error-container">
+          <h2 class="error-title">Documento Non Trovato</h2>
+          <p style="margin-bottom: 24px;">${message}</p>
+          <p style="font-size: 0.9rem; opacity: 0.8;">Verrai reindirizzato alla pagina di costruzione tra poco...</p>
+        </div>
+      `;
+
+      // Fallback redirect after 3 seconds
+      setTimeout(() => {
+        window.location.href = '/costruzione.html';
+      }, 3500);
+    }
+
+    // Theme toggle initialization
+    function initTheme() {
+      const themeToggleBtn = document.getElementById('btn-theme-toggle');
+      if (!themeToggleBtn) return;
+
+      const updateButtonIcon = () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (isDark) {
+          // Show sun icon to switch back to light
+          themeToggleBtn.innerHTML = `
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+            </svg>
+          `;
+          themeToggleBtn.title = "Attiva tema chiaro";
+        } else {
+          // Show moon icon to switch to dark
+          themeToggleBtn.innerHTML = `
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          `;
+          themeToggleBtn.title = "Attiva tema scuro";
+        }
+      };
+
+      // Set initial icon
+      updateButtonIcon();
+
+      themeToggleBtn.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (isDark) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        updateButtonIcon();
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Monitor scroll for back-to-top visibility
+      const btnScrollTop = document.getElementById('btn-scroll-top');
+      if (btnScrollTop) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 300) {
+            btnScrollTop.style.display = 'flex';
+          } else {
+            btnScrollTop.style.display = 'none';
+          }
+        });
+
+        btnScrollTop.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Monitor scroll for reading progress bar
+      window.addEventListener('scroll', () => {
+        const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+        const progressBar = document.getElementById('reading-progress-bar');
+        if (progressBar) {
+          progressBar.style.width = scrolled + '%';
+        }
+      });
+
+      // Initialize theme toggle
+      initTheme();
+
+      loadMarkdown();
+    });
+  </script>
+
+  <!-- Floating Back to Top Button -->
+  <button id="btn-scroll-top" class="btn-scroll-top" aria-label="Torna in alto" title="Torna in alto" style="display: none;">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+    </svg>
+  </button>
+</body>
+</html>

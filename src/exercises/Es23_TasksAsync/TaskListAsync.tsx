@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
-import type { Task, FilterType } from '../types/task';
-import TaskRow from './TaskRow';
-import { taskService } from '../services/taskService';
+import type { Task, FilterType } from '../../types/task';
+import TaskRow from '../Es22_Tasks/TaskRow';
+import { taskService } from '../../services/taskService';
 
 const ITEMS_PER_PAGE_OPTIONS = [5, 10, 20];
 

@@ -176,12 +176,12 @@ export default function TaskApiDocumentation() {
           Configurazione Ambiente Mock Server (`json-server`)
         </h4>
         <p style={{ margin: '0 0 12px 0', fontSize: '0.85rem', lineHeight: '1.4' }}>
-          Il server mock risiede nella cartella <strong>`giorno26-server`</strong> (esterna a `my-app`). È configurato per funzionare in locale tramite il comando <code>npm start</code>, che avvia <code>json-server</code> monitorando il file <code>db.json</code> sulla porta <strong>3001</strong>.
+          Il server mock è integrato direttamente in <strong>`my-app`</strong>. È configurato per funzionare in locale tramite il comando <code>npm run server</code> (oppure tramite <code>npm run dev:all</code> per avviarlo insieme al client), monitorando il file <code>server/db.json</code> sulla porta <strong>3001</strong>.
         </p>
         <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', fontSize: '0.8rem' }}>
-          <span>📂 <strong>Cartella:</strong> giorno26-server</span>
+          <span>📂 <strong>Cartella:</strong> my-app/server</span>
           <span>🔌 <strong>Porta:</strong> 3001</span>
-          <span>⚡ <strong>Script:</strong> <code>json-server --watch db.json --port 3001</code></span>
+          <span>⚡ <strong>Script:</strong> <code>npm run dev:all</code></span>
         </div>
       </div>
 
@@ -265,8 +265,8 @@ export default function TaskApiDocumentation() {
           flexDirection: 'column',
           gap: '16px'
         }}>
-          {/* Riga Superiore URL e Stato */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+          {/* Chiamata URL e Stato */}
+          <div style={{ display: 'flex', justifySelf: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexGrow: 1 }}>
               <span style={{
                 padding: '4px 10px',

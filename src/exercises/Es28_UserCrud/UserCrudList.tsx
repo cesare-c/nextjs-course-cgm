@@ -1,4 +1,4 @@
-import type { User } from '../../types/userDay27';
+import type { User } from '../../types/userDay28';
 import { formatFullName } from '../../helpers/userHelpers';
 
 interface UserCrudListProps {
@@ -9,14 +9,14 @@ interface UserCrudListProps {
   filter: 'all' | 'active' | 'inactive';
   onFilterChange: (filter: 'all' | 'active' | 'inactive') => void;
   onPageChange: (page: number) => void;
-  onSelectUser: (id: number) => void;
+  onSelectUser: (id: number | string) => void;
   onAddUser: () => void;
-  onEditUser: (id: number) => void;
-  onDeleteUser: (id: number) => Promise<void>;
+  onEditUser: (id: number | string) => void;
+  onDeleteUser: (id: number | string) => Promise<void>;
   isActionInProgress: boolean;
 }
 
-export default function UserCrudList({
+export default function UserCrudListDay28({
   users,
   total,
   currentPage,
@@ -241,11 +241,7 @@ export default function UserCrudList({
                         Modifica
                       </button>
                       <button
-                        onClick={async () => {
-                          if (confirm(`Sei sicuro di voler eliminare @${user.username}?`)) {
-                            await onDeleteUser(user.id);
-                          }
-                        }}
+                        onClick={() => onDeleteUser(user.id)}
                         style={actionButtonStyle('delete')}
                         title="Elimina"
                         disabled={isActionInProgress}

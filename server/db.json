@@ -1,0 +1,118 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "nome": "Mario Rossi",
+      "titolo": "Configurare Ambiente",
+      "stato": "completato"
+    },
+    {
+      "id": "2",
+      "nome": "Anna Bianchi",
+      "titolo": "Implementare UI",
+      "stato": "in_corso"
+    },
+    {
+      "id": "3",
+      "nome": "Luca Verdi",
+      "titolo": "Definire API",
+      "stato": "in_corso"
+    },
+    {
+      "id": "5",
+      "nome": "Francesco Russo",
+      "titolo": "Deploy in Produzione",
+      "stato": "da_fare"
+    },
+    {
+      "name": "Add your name in the body",
+      "id": "t3nClEC"
+    },
+    {
+      "name": "Add your name in the body",
+      "id": "eDjIG9D"
+    },
+    {
+      "name": "Add your name in the body",
+      "id": "HPU9CrR"
+    }
+  ],
+  "users": [
+    {
+      "id": "dMray_qIM9k",
+      "username": "mrossi",
+      "email": "mario.rossi@example.com",
+      "isActive": true,
+      "firstName": "Mario",
+      "lastName": "Rossi",
+      "middleName": "Luigi"
+    },
+    {
+      "id": "0IECqbiXhrU",
+      "username": "abianchi",
+      "email": "anna.bianchi@example.com",
+      "isActive": true,
+      "firstName": "Anna",
+      "lastName": "Bianchi"
+    },
+    {
+      "id": "RqTHOEqbsqE",
+      "username": "lverdi",
+      "email": "luca.verdi@example.com",
+      "isActive": false,
+      "firstName": "Luca",
+      "lastName": "Verdi",
+      "middleName": "Antonio"
+    },
+    {
+      "id": "7oST9qJx-p4",
+      "username": "gneri",
+      "email": "giulia.neri@example.com",
+      "isActive": true,
+      "firstName": "Giulia",
+      "lastName": "Neri"
+    },
+    {
+      "id": "q4TkNa5hPf4",
+      "username": "frusso",
+      "email": "francesco.russo@example.com",
+      "isActive": false,
+      "firstName": "Francesco",
+      "lastName": "Russo"
+    },
+    {
+      "id": "L9-nlHuSXNo",
+      "username": "gferrari",
+      "email": "giovanni.ferrari@example.com",
+      "isActive": true,
+      "firstName": "Giovanni",
+      "lastName": "Ferrari",
+      "middleName": "Maria"
+    },
+    {
+      "id": "sFbNRr_5mlE",
+      "username": "eesposito",
+      "email": "elena.esposito@example.com",
+      "isActive": true,
+      "firstName": "Elena",
+      "lastName": "Esposito"
+    },
+    {
+      "id": "DfBTcWdRlN0",
+      "username": "aromano",
+      "email": "alessandro.romano@example.com",
+      "isActive": false,
+      "firstName": "Alessandro",
+      "lastName": "Romano"
+    },
+    {
+      "id": "F_Urygx_XQQ",
+      "username": "tester123",
+      "email": "tester123@example.com",
+      "firstName": "Tester",
+      "lastName": "User",
+      "isActive": true
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
