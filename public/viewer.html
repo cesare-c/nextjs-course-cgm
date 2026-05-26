@@ -48,6 +48,10 @@
       --shadow: rgba(0, 0, 0, 0.3) 0px 10px 35px -5px, rgba(0, 0, 0, 0.2) 0px 4px 15px -3px;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       padding: 60px 0 0 0;
@@ -174,6 +178,7 @@
       margin-top: 1.8em;
       margin-bottom: 0.5em;
       font-weight: 600;
+      scroll-margin-top: 80px; /* Offset scroll position to keep headings visible below the fixed navbar */
     }
 
     .content h1 {
