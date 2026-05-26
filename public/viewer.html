@@ -15,7 +15,10 @@
   <!-- Prism.js (Syntax Highlighting) -->
   <link rel="stylesheet" href="/vendor/prism-solarized-dark-atom.min.css" id="prism-theme">
   <script src="/vendor/prism.min.js"></script>
+  <script src="/vendor/prism-typescript.min.js"></script>
+  <script src="/vendor/prism-jsx.min.js"></script>
   <script src="/vendor/prism-tsx.min.js"></script>
+  <script src="/vendor/prism-json.min.js"></script>
 
   <style>
     :root {
@@ -218,6 +221,15 @@
       color: #839496 !important;
       overflow-x: auto;
       font-size: 0.9rem;
+    }
+
+    /* Green comments like in a real IDE */
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+      color: #6a9955 !important;
+      font-style: italic !important;
     }
 
     .content ul, .content ol {
