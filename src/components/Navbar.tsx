@@ -45,6 +45,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { label: 'Es 31', href: '#es-31', title: 'Auth & Router Day 31' },
     { label: 'Es 28', href: '#es-28', title: 'User CRUD Day 28' },
     { label: 'Es 27', href: '#es-27', title: 'User CRUD' },
     { label: 'Es 26', href: '#es-26', title: 'API Docs' },

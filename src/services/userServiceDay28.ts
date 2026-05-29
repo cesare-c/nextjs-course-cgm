@@ -130,7 +130,7 @@ export const userServiceDay28 = {
     }
 
     // Assign numeric ID
-    const nextId = allUsers.length > 0 ? Math.max(...allUsers.map((u) => u.id)) + 1 : 1;
+    const nextId = allUsers.length > 0 ? Math.max(...allUsers.map((u) => Number(u.id))) + 1 : 1;
 
     // Rules logic:
     // - isActive always set to true

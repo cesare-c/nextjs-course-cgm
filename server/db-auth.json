@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "email": "cesare.test@example.com",
+      "password": "$2a$10$d0gXSJHH1d.O.hDVO3VLx.PlZe7wHaJyysJ13XDtn.Df1/MuJJ9r2",
+      "username": "cesare",
+      "fullName": "Cesare Test",
+      "id": 1
+    },
+    {
+      "email": "test.cesare.new.318@example.com",
+      "password": "$2a$10$zLcHTfqtDzHYOso3nRCsB.xhZUF1jqNrTBIoeDoJnIQzxtPiuOwRK",
+      "username": "test_cesare",
+      "fullName": "Cesare Test",
+      "id": 2
+    },
+    {
+      "email": "test.cesare.new.881@example.com",
+      "password": "$2a$10$3CKlypL9CtZgirkaRuKwr.Il8XaaWKDRNVN2eB9yfjoxVke9Gz5Xa",
+      "username": "test_cesare2",
+      "fullName": "Cesare Test Due",
+      "id": 3
+    },
+    {
+      "email": "test.cesare.new.902@example.com",
+      "password": "$2a$10$SxuM3T1VLLia305nvLAeqe/9HTQKvMKMU0E16MqqGrF4nvgdxTPsC",
+      "username": "test_cesare3",
+      "fullName": "Cesare Test Tre",
+      "id": 4
+    },
+    {
+      "email": "cesare@example.com",
+      "password": "$2a$10$VhhfVihofcU5sy0cg22XlOtUA4ymZ.ou/W36dXf2psjjgiDNJgu/S",
+      "username": "cesare",
+      "fullName": "Cesare",
+      "id": 5
+    }
+  ]
+}

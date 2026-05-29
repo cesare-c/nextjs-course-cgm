@@ -7,15 +7,18 @@
     "dev": "vite",
     "dev:host": "vite --host",
     "server": "node server.js",
-    "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
+    "server:auth": "npx -p json-server@0.17.4 -p json-server-auth json-server-auth server/db-auth.json -p 3002",
+    "dev:all": "concurrently \"npm run dev\" \"npm run server\" \"npm run server:auth\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.16.1",
+    "express": "^5.2.1",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.16.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
