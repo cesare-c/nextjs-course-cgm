@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { authService } from '../services/authService';
 import type { AuthUser } from '../types/auth';
 import StatusModal from '../components/StatusModal';
@@ -28,7 +29,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
     message: '',
   });
 
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const openModal = (type: 'success' | 'error', title: string, message: string, actionLabel?: string, onAction?: () => void) => {
     setModalConfig({
@@ -70,7 +71,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
         'Accesso Eseguito!',
         `Benvenuto in SecureAuth, ${response.user.fullName}! La tua sessione è ora attiva.`,
         'Vai alla Dashboard',
-        () => navigate('/es31/private')
+        () => router.push('/es31/private')
       );
     } catch (err: any) {
       setUiState('error');
@@ -211,9 +212,9 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
 
         <p style={{ textAlign: 'center', fontSize: '0.85rem', color: 'var(--text)', marginTop: '24px', marginBottom: 0 }}>
           Non hai ancora un account?{' '}
-          <Link to="/es31/register" style={{ color: 'var(--accent)', fontWeight: '600', textDecoration: 'none' }}>
+          <a href="/es31/register" style={{ color: 'var(--accent)', fontWeight: '600', textDecoration: 'none' }}>
             Registrati ora
-          </Link>
+          </a>
         </p>
 
         <style>{`

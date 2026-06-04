@@ -1,4 +1,7 @@
-import { Navigate, Outlet } from 'react-router-dom';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { localStorageHelper } from '../helpers/localStorageHelper';
 
 interface PublicOnlyRouteProps {
@@ -6,12 +9,16 @@ interface PublicOnlyRouteProps {
 }
 
 export default function PublicOnlyRoute({ children }: PublicOnlyRouteProps) {
-  const isAuth = localStorageHelper.isAuthenticated();
+  const router = useRouter();
+  const [authorized, setAuthorized] = useState(false);
 
-  if (isAuth) {
-    // If already logged in, redirect to the private page
-    return <Navigate to="/es31/private" replace />;
-  }
+  useEffect(() => {
+    if (localStorageHelper.isAuthenticated()) {
+      router.replace('/es31/private');
+    } else {
+      setAuthorized(true);
+    }
+  }, [router]);
 
-  return children ? <>{children}</> : <Outlet />;
+  return authorized ? <>{children}</> : null;
 }

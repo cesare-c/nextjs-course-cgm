@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export default function PublicPage() {
   return (
@@ -90,8 +90,8 @@ export default function PublicPage() {
       </div>
 
       <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
-        <Link
-          to="/es31/login"
+        <a
+          href="/es31/login"
           style={{
             textDecoration: 'none',
             color: '#fff',
@@ -105,9 +105,9 @@ export default function PublicPage() {
           }}
         >
           Accedi
-        </Link>
-        <Link
-          to="/es31/register"
+        </a>
+        <a
+          href="/es31/register"
           style={{
             textDecoration: 'none',
             color: 'var(--text-h)',
@@ -127,7 +127,7 @@ export default function PublicPage() {
           }}
         >
           Registrati
-        </Link>
+        </a>
       </div>
     </div>
   );

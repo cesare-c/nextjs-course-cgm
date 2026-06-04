@@ -1,4 +1,7 @@
-import { NavLink, Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import type { AuthUser } from '../types/auth';
 
 interface AuthNavbarProps {
@@ -7,17 +10,36 @@ interface AuthNavbarProps {
 }
 
 export default function AuthNavbar({ user, onLogout }: AuthNavbarProps) {
-  const linkStyle = ({ isActive }: { isActive: boolean }) => ({
-    textDecoration: 'none',
-    color: isActive ? 'var(--accent)' : 'var(--text)',
-    background: isActive ? 'var(--accent-bg)' : 'transparent',
-    padding: '8px 16px',
-    borderRadius: '8px',
-    fontSize: '0.85rem',
-    fontWeight: '600',
-    border: isActive ? '1px solid var(--accent-border)' : '1px solid transparent',
-    transition: 'all 0.2s',
-  });
+  const pathname = usePathname();
+
+  const getLinkStyle = (href: string) => {
+    const isActive = href === '/es31' ? pathname === '/es31' : pathname.startsWith(href);
+    return {
+      textDecoration: 'none',
+      color: isActive ? 'var(--accent)' : 'var(--text)',
+      background: isActive ? 'var(--accent-bg)' : 'transparent',
+      padding: '8px 16px',
+      borderRadius: '8px',
+      fontSize: '0.85rem',
+      fontWeight: '600' as const,
+      border: isActive ? '1px solid var(--accent-border)' : '1px solid transparent',
+      transition: 'all 0.2s',
+    };
+  };
+
+  const getAuthLinkStyle = (href: string) => {
+    const isActive = pathname === href;
+    return {
+      textDecoration: 'none',
+      color: isActive ? 'var(--accent)' : 'var(--text)',
+      padding: '6px 12px',
+      fontSize: '0.82rem',
+      fontWeight: '600' as const,
+      borderRadius: '6px',
+      background: isActive ? 'var(--accent-bg)' : 'transparent',
+      transition: 'all 0.2s',
+    };
+  };
 
   return (
     <nav
@@ -46,18 +68,18 @@ export default function AuthNavbar({ user, onLogout }: AuthNavbarProps) {
         </div>
 
         <div style={{ display: 'flex', gap: '8px' }}>
-          <NavLink to="/es31" style={linkStyle} end>
+          <a href="/es31" style={getLinkStyle('/es31')}>
             🏠 Main
-          </NavLink>
-          <NavLink to="/es31/pubblica2" style={linkStyle}>
+          </a>
+          <a href="/es31/pubblica2" style={getLinkStyle('/es31/pubblica2')}>
             📖 Architettura
-          </NavLink>
-          <NavLink to="/es31/pubblica3" style={linkStyle}>
+          </a>
+          <a href="/es31/pubblica3" style={getLinkStyle('/es31/pubblica3')}>
             💡 Q&A
-          </NavLink>
-          <NavLink to="/es31/private" style={linkStyle}>
+          </a>
+          <a href="/es31/private" style={getLinkStyle('/es31/private')}>
             🔒 Privata
-          </NavLink>
+          </a>
         </div>
       </div>
 
@@ -95,41 +117,23 @@ export default function AuthNavbar({ user, onLogout }: AuthNavbarProps) {
           </div>
         ) : (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderRight: '1px solid var(--border)', paddingRight: '16px' }}>
-            <NavLink
-              to="/es31/login"
-              style={({ isActive }) => ({
-                textDecoration: 'none',
-                color: isActive ? 'var(--accent)' : 'var(--text)',
-                padding: '6px 12px',
-                fontSize: '0.82rem',
-                fontWeight: '600',
-                borderRadius: '6px',
-                background: isActive ? 'var(--accent-bg)' : 'transparent',
-                transition: 'all 0.2s',
-              })}
+            <a
+              href="/es31/login"
+              style={getAuthLinkStyle('/es31/login')}
             >
               🔑 Accedi
-            </NavLink>
-            <NavLink
-              to="/es31/register"
-              style={({ isActive }) => ({
-                textDecoration: 'none',
-                color: isActive ? 'var(--accent)' : 'var(--text)',
-                padding: '6px 12px',
-                fontSize: '0.82rem',
-                fontWeight: '600',
-                borderRadius: '6px',
-                background: isActive ? 'var(--accent-bg)' : 'transparent',
-                transition: 'all 0.2s',
-              })}
+            </a>
+            <a
+              href="/es31/register"
+              style={getAuthLinkStyle('/es31/register')}
             >
               📝 Registrati
-            </NavLink>
+            </a>
           </div>
         )}
 
-        <Link
-          to="/"
+        <a
+          href="/"
           style={{
             color: 'var(--text)',
             textDecoration: 'none',
@@ -155,7 +159,7 @@ export default function AuthNavbar({ user, onLogout }: AuthNavbarProps) {
           }}
         >
           ↩️ Home Esercizi
-        </Link>
+        </a>
       </div>
     </nav>
   );
