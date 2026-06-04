@@ -45,6 +45,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { label: 'Es 34', href: '#es-34', title: 'E-Commerce Day 34' },
     { label: 'Es 33', href: '#es-33', title: 'Dashboard & Resources Day 33' },
     { label: 'Es 31', href: '#es-31', title: 'Auth & Router Day 31' },
     { label: 'Es 28', href: '#es-28', title: 'User CRUD Day 28' },

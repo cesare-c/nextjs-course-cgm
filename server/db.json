@@ -114,5 +114,167 @@
       "isActive": true
     }
   ],
+  "products": [
+    {
+      "id": "prod-1",
+      "name": "Quaderno Minimal A5",
+      "description": "Quaderno con copertina rigida nera e 160 pagine puntinate, ideale per appunti e bullet journal.",
+      "price": 3.50,
+      "category": "Cancelleria",
+      "emoji": "📓"
+    },
+    {
+      "id": "prod-2",
+      "name": "Penne a Sfera Gel (Pack 4)",
+      "description": "Set di 4 penne con inchiostro gel nero ad asciugatura rapida e punta fine da 0.5mm.",
+      "price": 5.90,
+      "category": "Cancelleria",
+      "emoji": "🖊️"
+    },
+    {
+      "id": "prod-3",
+      "name": "Evidenziatori Pastello (Pack 6)",
+      "description": "Confezione da 6 evidenziatori dai colori pastello delicati, non passano attraverso la carta.",
+      "price": 7.50,
+      "category": "Cancelleria",
+      "emoji": "🖍️"
+    },
+    {
+      "id": "prod-4",
+      "name": "Post-it Notes Gialli",
+      "description": "Blocchetto di foglietti adesivi gialli riposizionabili da 100 fogli.",
+      "price": 1.80,
+      "category": "Cancelleria",
+      "emoji": "📝"
+    },
+    {
+      "id": "prod-5",
+      "name": "Graffette Dorate (Scatola)",
+      "description": "Scatola da 100 graffette metalliche con elegante finitura dorata lucida.",
+      "price": 2.20,
+      "category": "Cancelleria",
+      "emoji": "📎"
+    },
+    {
+      "id": "prod-6",
+      "name": "Portapenne in Metallo",
+      "description": "Portapenne cilindrico a rete metallica nera per l'organizzazione della scrivania.",
+      "price": 4.50,
+      "category": "Cancelleria",
+      "emoji": "✏️"
+    },
+    {
+      "id": "prod-7",
+      "name": "Forbici da Ufficio",
+      "description": "Forbici in acciaio inossidabile con impugnatura ergonomica morbida.",
+      "price": 3.20,
+      "category": "Cancelleria",
+      "emoji": "✂️"
+    },
+    {
+      "id": "prod-8",
+      "name": "Gomma da Cancellare (Pack 3)",
+      "description": "Set di tre gomme bianche per matita morbide, senza polvere, non lasciano aloni.",
+      "price": 1.50,
+      "category": "Cancelleria",
+      "emoji": "🧼"
+    },
+    {
+      "id": "prod-9",
+      "name": "Matite in Grafite HB (Pack 12)",
+      "description": "Scatola di 12 matite in grafite di qualità con gommino all'estremità.",
+      "price": 2.80,
+      "category": "Cancelleria",
+      "emoji": "✏️"
+    },
+    {
+      "id": "prod-10",
+      "name": "Raccoglitore ad Anelli",
+      "description": "Raccoglitore formato A4 in cartone pressato con 4 anelli da 30mm.",
+      "price": 4.20,
+      "category": "Cancelleria",
+      "emoji": "📂"
+    },
+    {
+      "id": "prod-11",
+      "name": "Chiavetta USB 64GB",
+      "description": "Memoria flash USB 3.0 ad alta velocità, design metallico ultra-compatto ed elegante.",
+      "price": 12.90,
+      "category": "Elettronica",
+      "emoji": "💾"
+    },
+    {
+      "id": "prod-12",
+      "name": "Mouse Wireless Go",
+      "description": "Mouse ottico wireless compatto e silenzioso, ideale per smart working e studenti.",
+      "price": 15.50,
+      "category": "Elettronica",
+      "emoji": "🖱️"
+    },
+    {
+      "id": "prod-13",
+      "name": "Calcolatrice Scientifica",
+      "description": "Calcolatrice scientifica con display a 2 righe, ideale per calcoli complessi e scuola.",
+      "price": 19.90,
+      "category": "Elettronica",
+      "emoji": "🧮"
+    },
+    {
+      "id": "prod-14",
+      "name": "Cuffie In-Ear Basic",
+      "description": "Cuffie auricolari con cavo anti-groviglio e microfono incorporato per chiamate chiare.",
+      "price": 9.99,
+      "category": "Elettronica",
+      "emoji": "🎧"
+    },
+    {
+      "id": "prod-15",
+      "name": "Caricabatterie USB-C 20W",
+      "description": "Alimentatore da parete per ricarica rapida, compatibile con tutti i moderni smartphone.",
+      "price": 14.50,
+      "category": "Elettronica",
+      "emoji": "🔌"
+    },
+    {
+      "id": "prod-16",
+      "name": "Lampada da Scrivania LED",
+      "description": "Lampada led dimmerabile con porta USB per ricarica e braccio flessibile orientabile.",
+      "price": 24.99,
+      "category": "Elettronica",
+      "emoji": "💡"
+    },
+    {
+      "id": "prod-17",
+      "name": "Hub USB-C 4 Porte",
+      "description": "Adattatore USB-C in alluminio con 4 porte USB 3.0 ad alta velocità.",
+      "price": 18.90,
+      "category": "Elettronica",
+      "emoji": "🔌"
+    },
+    {
+      "id": "prod-18",
+      "name": "Tappetino Mouse Ergonomico",
+      "description": "Tappetino per mouse con supporto poggiapolsi in memory foam, base antiscivolo.",
+      "price": 11.50,
+      "category": "Elettronica",
+      "emoji": "🕳️"
+    },
+    {
+      "id": "prod-19",
+      "name": "Ventilatore USB da Tavolo",
+      "description": "Mini ventilatore usb silenzioso a tre velocità per rinfrescare lo spazio di lavoro.",
+      "price": 13.99,
+      "category": "Elettronica",
+      "emoji": "🌀"
+    },
+    {
+      "id": "prod-20",
+      "name": "Supporto per Laptop Regolabile",
+      "description": "Supporto ventilato in alluminio per computer portatili, pieghevole ed ergonomico.",
+      "price": 22.00,
+      "category": "Elettronica",
+      "emoji": "💻"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

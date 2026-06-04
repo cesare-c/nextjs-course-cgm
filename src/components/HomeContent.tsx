@@ -13,6 +13,8 @@ import Navbar from './Navbar';
 import ExerciseNavbar from './ExerciseNavbar';
 import Link from 'next/link';
 import es31PreviewImg from '../assets/es31_preview.png';
+import es34PreviewImg from '../assets/es_34.png';
+import es33PreviewImg from '../assets/es_33.png';
 import '../App.css';
 
 export default function HomeContent() {
@@ -20,6 +22,84 @@ export default function HomeContent() {
     <>
       <Navbar />
       <section id="center">
+        {/* ----------------------------------ESERCIZIO GIORNO 34 */}
+        <div className="exercise-container" id="es-34" style={{ backgroundColor: 'var(--es-28-bg)', paddingBottom: '40px', paddingTop: '10px', borderBottom: '2px solid var(--border)' }}>
+          <ExerciseNavbar title="Esercizio Giorno 34" date="04.Giugno.2026" exerciseId="Es34_Ecommerce" />
+          
+          <div
+            style={{
+              padding: '24px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '20px',
+              maxWidth: '750px',
+              margin: '0 auto',
+              textAlign: 'center',
+            }}
+          >
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                maxWidth: '550px',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                border: '1px solid var(--border)',
+                boxShadow: 'var(--shadow)',
+                aspectRatio: '16/9',
+                backgroundColor: '#1e1e2e',
+              }}
+            >
+              <img
+                src={typeof es34PreviewImg === 'string' ? es34PreviewImg : es34PreviewImg.src}
+                alt="Anteprima Esercizio 34"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
+              />
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <h3 style={{ margin: '0 0 10px 0', fontSize: '1.4rem', color: 'var(--text-h)', fontWeight: '700' }}>
+                Next.js E-Commerce & Carrello Dinamico
+              </h3>
+              <p style={{ margin: '0 0 20px 0', fontSize: '0.95rem', color: 'var(--text)', lineHeight: '1.6', maxWidth: '600px' }}>
+                Un portale e-commerce collegato a JSON-Server per la gestione dei prodotti. Supporta schede di dettaglio dinamiche, navigazione isolata con Route Inspector, sincronizzazione automatica del carrello in LocalStorage e regole di spedizione calcolate in tempo reale.
+              </p>
+            </div>
+
+            <Link
+              href="/es34"
+              style={{
+                display: 'inline-block',
+                padding: '12px 28px',
+                borderRadius: '8px',
+                backgroundColor: 'var(--accent)',
+                color: '#fff',
+                textDecoration: 'none',
+                fontWeight: '600',
+                fontSize: '1rem',
+                boxShadow: '0 4px 12px rgba(170, 59, 255, 0.25)',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(170, 59, 255, 0.35)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(170, 59, 255, 0.25)';
+              }}
+            >
+              Esplora esercizio 34 🚀
+            </Link>
+          </div>
+        </div>
+
         {/* ----------------------------------ESERCIZIO GIORNO 33 */}
         <div className="exercise-container" id="es-33" style={{ backgroundColor: 'var(--es-28-bg)', paddingBottom: '40px', paddingTop: '10px', borderBottom: '2px solid var(--border)' }}>
           <ExerciseNavbar title="Esercizio Giorno 33" date="03.Giugno.2026" exerciseId="Es33_ResourcePortal" />
@@ -47,14 +127,18 @@ export default function HomeContent() {
                 boxShadow: 'var(--shadow)',
                 aspectRatio: '16/9',
                 backgroundColor: '#1e1e2e',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '3.5rem',
-                background: 'linear-gradient(135deg, #10b981 0%, #3b82f6 100%)',
               }}
             >
-              📊
+              <img
+                src={typeof es33PreviewImg === 'string' ? es33PreviewImg : es33PreviewImg.src}
+                alt="Anteprima Esercizio 33"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                }}
+              />
             </div>
 
             <div style={{ textAlign: 'center' }}>
