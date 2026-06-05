@@ -12,9 +12,9 @@ import DefaultExercise from '../exercises/Es20_Default/DefaultExercise';
 import Navbar from './Navbar';
 import ExerciseNavbar from './ExerciseNavbar';
 import Link from 'next/link';
-import es31PreviewImg from '../assets/es31_preview.png';
-import es34PreviewImg from '../assets/es_34.png';
-import es33PreviewImg from '../assets/es_33.png';
+const es31PreviewImg = '/assets/es31_preview.png';
+const es34PreviewImg = '/assets/es_34.png';
+const es33PreviewImg = '/assets/es_33.png';
 import '../App.css';
 
 export default function HomeContent() {
@@ -52,7 +52,7 @@ export default function HomeContent() {
               }}
             >
               <img
-                src={typeof es34PreviewImg === 'string' ? es34PreviewImg : es34PreviewImg.src}
+                src={es34PreviewImg}
                 alt="Anteprima Esercizio 34"
                 style={{
                   width: '100%',
@@ -130,7 +130,7 @@ export default function HomeContent() {
               }}
             >
               <img
-                src={typeof es33PreviewImg === 'string' ? es33PreviewImg : es33PreviewImg.src}
+                src={es33PreviewImg}
                 alt="Anteprima Esercizio 33"
                 style={{
                   width: '100%',
@@ -208,7 +208,7 @@ export default function HomeContent() {
               }}
             >
               <img
-                src={typeof es31PreviewImg === 'string' ? es31PreviewImg : es31PreviewImg.src}
+                src={es31PreviewImg}
                 alt="Anteprima Esercizio 31"
                 style={{
                   width: '100%',
